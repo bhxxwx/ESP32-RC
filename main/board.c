@@ -131,7 +131,7 @@ void SenceMode_key(void *arg)
 	}
 	if ((*((uint8_t*) arg) - 48) <= 3)
 	{
-		data[0] = 3;
+		data[0] = 2;
 		data[1] = *((uint8_t*) arg) - 48;
 		example_ble_mesh_send_vendor_message(data, 2);
 		LED_blink();

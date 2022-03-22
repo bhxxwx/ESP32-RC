@@ -22,7 +22,7 @@ typedef struct
 	uint8_t triger;
 } PinFuncMap_t;
 
-void board_init();
+void board_init(uint8_t mode);
 
 void OnOff_key(void *arg);
 void MainColorLightLevelTog_key(void *arg);

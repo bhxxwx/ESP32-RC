@@ -2706,3 +2706,17 @@
 1058	2841	6696454565078043	esp-idf/esp32/ld/esp32.project.ld	85f843386c2a3f0e
 2841	7781	6696454614431243	vendor_server.elf	7c5c06d22f8f6b93
 7782	8094	6696454617780665	.bin_timestamp	74b8d74986b0c5a3
+3	10236	6697434590543746	build.ninja	984835ba01334968
+86	324	6697434593171473	partition_table/partition-table.bin	3a7a66476a060cf4
+81	769	6697434598970993	esp-idf/app_update/CMakeFiles/__idf_app_update.dir/esp_app_desc.c.obj	bc9bc29ba0340d2d
+769	881	6697434600186691	esp-idf/app_update/libapp_update.a	2076fbf53e86535e
+882	3013	6697434621337463	esp-idf/esp32/ld/esp32.project.ld	382c71517e762ba0
+325	4857	6697434639943568	bootloader-prefix/src/bootloader-stamp/bootloader-configure	32c4e38dc4770e38
+3014	8936	6697434680513450	vendor_server.elf	7c5c06d22f8f6b93
+8937	9274	6697434684104464	.bin_timestamp	d18fb1d38a9a396f
+4860	9588	6697434639943568	bootloader-prefix/src/bootloader-stamp/bootloader-build	a31991845e936db2
+4860	9588	6697434639943568	bootloader/bootloader.elf	a31991845e936db2
+4860	9588	6697434639943568	bootloader/bootloader.bin	a31991845e936db2
+4860	9588	6697434639943568	bootloader/bootloader.map	a31991845e936db2
+9591	9659	6697434687959994	CMakeFiles/bootloader-complete	6e7607ba592122e
+9591	9659	6697434687959994	bootloader-prefix/src/bootloader-stamp/bootloader-done	6e7607ba592122e

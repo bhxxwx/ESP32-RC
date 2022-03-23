@@ -58,7 +58,7 @@ static esp_ble_mesh_cfg_srv_t config_server = { .relay = ESP_BLE_MESH_RELAY_DISA
 	.net_transmit = ESP_BLE_MESH_TRANSMIT(2, 20), .relay_retransmit = ESP_BLE_MESH_TRANSMIT(2, 20), };
 
 static esp_ble_mesh_model_t root_models[] = {
-ESP_BLE_MESH_MODEL_CFG_SRV(&config_server), };
+ESP_BLE_MESH_MODEL_CFG_SRV(&config_server), }; 
 
 static esp_ble_mesh_model_op_t vnd_op[] = {
 ESP_BLE_MESH_MODEL_OP(ESP_BLE_MESH_VND_MODEL_OP_SEND, 2),

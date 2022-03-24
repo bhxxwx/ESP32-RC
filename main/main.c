@@ -39,7 +39,7 @@
 #define ESP_BLE_MESH_VND_MODEL_OP_STATUS    ESP_BLE_MESH_MODEL_OP_3(0x03, CID_ESP)
 void OP_PROV_Func(void *arg);
 nvs_handle_t NVS_USER_HANDLE;
-static bool _is_proved=false;
+static bool _is_proved = false;
 static uint8_t dev_uuid[ESP_BLE_MESH_OCTET16_LEN] = { 0xAA, 0x10, 0xBB };
 
 static esp_ble_mesh_cfg_srv_t config_server = { .relay = ESP_BLE_MESH_RELAY_DISABLED, .beacon = ESP_BLE_MESH_BEACON_ENABLED,
@@ -58,7 +58,7 @@ static esp_ble_mesh_cfg_srv_t config_server = { .relay = ESP_BLE_MESH_RELAY_DISA
 	.net_transmit = ESP_BLE_MESH_TRANSMIT(2, 20), .relay_retransmit = ESP_BLE_MESH_TRANSMIT(2, 20), };
 
 static esp_ble_mesh_model_t root_models[] = {
-ESP_BLE_MESH_MODEL_CFG_SRV(&config_server), }; 
+ESP_BLE_MESH_MODEL_CFG_SRV(&config_server), };
 
 static esp_ble_mesh_model_op_t vnd_op[] = {
 ESP_BLE_MESH_MODEL_OP(ESP_BLE_MESH_VND_MODEL_OP_SEND, 2),
@@ -152,7 +152,7 @@ static void example_ble_mesh_config_server_cb(esp_ble_mesh_cfg_server_cb_event_t
 			case ESP_BLE_MESH_MODEL_OP_MODEL_APP_BIND:
 				ESP_LOGI(TAG, "ESP_BLE_MESH_MODEL_OP_MODEL_APP_BIND");
 				ESP_LOGI(TAG, "elem_addr 0x%04x, app_idx 0x%04x, cid 0x%04x, mod_id 0x%04x", param->value.state_change.mod_app_bind.element_addr, param->value.state_change.mod_app_bind.app_idx, param->value.state_change.mod_app_bind.company_id, param->value.state_change.mod_app_bind.model_id);
-				_is_proved=true;
+				_is_proved = true;
 				break;
 			default:
 				break;
@@ -204,7 +204,7 @@ static esp_err_t ble_mesh_init(void)
 		return err;
 	}
 
-	err = esp_ble_mesh_node_prov_enable(ESP_BLE_MESH_PROV_ADV);
+	err = esp_ble_mesh_node_prov_enable(ESP_BLE_MESH_PROV_ADV | ESP_BLE_MESH_PROV_GATT);
 	if (err != ESP_OK)
 	{
 		ESP_LOGE(TAG, "Failed to enable mesh node");
@@ -222,11 +222,11 @@ static void hallSenor_task(void *arg);
 void app_main(void)
 {
 	esp_err_t err;
-	uint8_t FactoryMode=0xFF;
+	uint8_t FactoryMode = 0xFF;
 	esp_pm_config_esp32_t pm_config;
-	pm_config.max_freq_mhz=80;
-	pm_config.min_freq_mhz=10;
-	pm_config.light_sleep_enable=true;
+	pm_config.max_freq_mhz = 80;
+	pm_config.min_freq_mhz = 10;
+	pm_config.light_sleep_enable = true;
 	ESP_LOGI(TAG, "Initializing...");
 
 	err = nvs_flash_init_partition("nvs_user");
@@ -236,8 +236,9 @@ void app_main(void)
 		err = nvs_flash_init_partition("nvs_user");
 	}
 	ESP_ERROR_CHECK(err);
+
 	nvs_open_from_partition("nvs_user", "user_infos", NVS_READWRITE, &NVS_USER_HANDLE);
-	if (ReadFromNVS("FactoryMode", &FactoryMode,NVS_USER_HANDLE))
+	if (ReadFromNVS("FactoryMode", &FactoryMode, NVS_USER_HANDLE))
 	{
 		if (FactoryMode != 0)
 		{
@@ -250,7 +251,6 @@ void app_main(void)
 		nvs_flash_erase();
 		dev_uuid[0] = 0xFA;
 	}
-
 	err = nvs_flash_init();
 	if (err == ESP_ERR_NVS_NO_FREE_PAGES)
 	{
@@ -275,11 +275,11 @@ void app_main(void)
 	{
 		ESP_LOGE(TAG, "Bluetooth mesh init failed (err %d)", err);
 	}
-	if(dev_uuid[0]==0xFA)
-		ESP_LOGI(TAG,"In Factory Mode");
-	if(dev_uuid[0]==0xAA)
-		ESP_LOGI(TAG,"In Normal Mode");
-	ESP_ERROR_CHECK( esp_pm_configure(&pm_config));
+	if (dev_uuid[0] == 0xFA)
+		ESP_LOGI(TAG, "In Factory Mode");
+	if (dev_uuid[0] == 0xAA)
+		ESP_LOGI(TAG, "In Normal Mode");
+	ESP_ERROR_CHECK(esp_pm_configure(&pm_config));
 //	CommandSystemInit();
 //	CommandReg("OP_PROV", OP_PROV_Func);
 //	CommandReg("CL_PROV", CL_PROV_Func);
@@ -294,16 +294,27 @@ void app_main(void)
 
 void OP_PROV_Func(void *arg)
 {
-	uint8_t FactoryMode;
-	if (ReadFromNVS("FactoryMode", &FactoryMode,NVS_USER_HANDLE))
+	if (*(uint8_t *)arg == '0')
 	{
-		if(FactoryMode!=0)
+
+		ESP_LOGI(TAG, "Close Factory Mode");
+		uint8_t FactoryMode;
+		if (ReadFromNVS("FactoryMode", &FactoryMode, NVS_USER_HANDLE))
+		{
+			if (FactoryMode != 0)
+				WriteToNVS("FactoryMode", 0, NVS_USER_HANDLE);
+		}
+		else
 			WriteToNVS("FactoryMode", 0, NVS_USER_HANDLE);
+		LED_op(1);
 	}
-	else
-		WriteToNVS("FactoryMode", 0, NVS_USER_HANDLE);
-	nvs_flash_erase();
-	esp_restart();
+	if (*(uint8_t *)arg == '1')
+	{
+		ESP_LOGI(TAG, "reset");
+		nvs_flash_erase();
+		esp_restart();
+		LED_op(0);
+	}
 }
 
 //static void echo_task(void *arg)
@@ -329,25 +340,22 @@ static void hallSenor_task(void *arg)
 {
 	while(1)
 	{
-		uint16_t value= ADC_GetValue();
-		ESP_LOGI(TAG, "magnetic field:%d", value);
-		if(value>=4000)
+		uint16_t value;
+		value = ADC_GetValue();
+		if(value<100)
 		{
-			ESP_LOGI(TAG, "value will detected again after 50ms");
-			vTaskDelay(50 / portTICK_PERIOD_MS);
-			value= ADC_GetValue();
-			if(value>=4000)
+			vTaskDelay(800 / portTICK_PERIOD_MS);
+			value = ADC_GetValue();
+			if(value<100)
 			{
-				esp_bluedroid_enable();
-				ESP_LOGI(TAG, "Detected magnetic field:%d, will OP_PROV and close FactoryMode", value);
-				OP_PROV_Func("");
+				OP_PROV_Func("0");
+				while (ADC_GetValue()<100)
+					{
+						vTaskDelay(800 / portTICK_PERIOD_MS);
+					}
+					OP_PROV_Func("1");
 			}
 		}
-		vTaskDelay(1000 / portTICK_PERIOD_MS);
-		if(_is_proved)
-		{
-//			vTaskDelay(2000 / portTICK_PERIOD_MS);
-//			esp_bluedroid_disable();
-		}
+		vTaskDelay(1100 / portTICK_PERIOD_MS);
 	}
 }

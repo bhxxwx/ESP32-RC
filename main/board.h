@@ -1,3 +1,12 @@
+/*
+ * @Author: Wangxiang
+ * @Date: 2022-03-02 16:08:47
+ * @LastEditTime: 2022-03-23 23:11:36
+ * @LastEditors: Wangxiang
+ * @Description: 
+ * @FilePath: /ESP32_VndServer_RC/main/board.h
+ * 江苏大学-王翔
+ */
 /* board.h - Board-specific hooks */
 
 /*
@@ -31,6 +40,6 @@ void ColorTempLevel_key(void *arg);
 void RGBChange_key(void *arg);
 void SenceMode_key(void *arg);
 void Dance_key(void *arg);
-
-
+void LED_op(bool states);
+void change_mode(uint8_t mode);
 #endif

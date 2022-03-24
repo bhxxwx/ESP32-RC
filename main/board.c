@@ -163,10 +163,17 @@ void LED_blink()
 		esp_rom_delay_us(800000);
 		gpio_set_level(GPIO_NUM_14, 0);
 	}
-
 }
 
-
+void LED_op(bool states)
+{
+	gpio_set_level(GPIO_NUM_14, states);
+}
+void change_mode(uint8_t mode)
+{
+	_mode = mode;
+}
+// extern void hallSenor_task(void *arg);
 void board_init(uint8_t mode)
 {
 	gpio_config_t io_conf ;
@@ -199,4 +206,7 @@ void board_init(uint8_t mode)
 		}
 	}
 
+	// button_handle_t btn_handle = iot_button_create(GPIO_NUM_36, BUTTON_ACTIVE_LOW);
+	// iot_button_set_evt_cb(btn_handle, BUTTON_CB_PUSH, hallSenor_task, "0");
+	// iot_button_set_evt_cb(btn_handle, BUTTON_CB_RELEASE, hallSenor_task, "1");
 }

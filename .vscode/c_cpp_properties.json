@@ -20,8 +20,8 @@
             ],
             "windowsSdkVersion": "10.0.19041.0",
             "compilerPath": "C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc.exe",
-            "cStandard": "c17",
-            "cppStandard": "c++17",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
             "intelliSenseMode": "gcc-arm",
             "browse": {
                 "limitSymbolsToIncludedHeaders": true

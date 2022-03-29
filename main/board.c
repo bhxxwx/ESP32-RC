@@ -179,6 +179,7 @@ void board_init(uint8_t mode)
 	gpio_config_t io_conf ;
 	_mode=mode;
 	ADC_Init();
+	
 	io_conf.intr_type=GPIO_INTR_DISABLE;
 	io_conf.mode = GPIO_MODE_OUTPUT;
 	io_conf.pin_bit_mask = 1ULL<<GPIO_NUM_14;

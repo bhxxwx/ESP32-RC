@@ -1,7 +1,7 @@
 /*
  * @Author: Wangxiang
  * @Date: 2022-03-02 16:08:47
- * @LastEditTime: 2022-03-23 23:11:36
+ * @LastEditTime: 2022-04-08 10:42:49
  * @LastEditors: Wangxiang
  * @Description: 
  * @FilePath: /ESP32_VndServer_RC/main/board.h
@@ -34,7 +34,8 @@ typedef struct
 void board_init(uint8_t mode);
 
 void OnOff_key(void *arg);
-void MainColorLightLevelTog_key(void *arg);
+void MainColorLightTog_key(void *arg);
+void MainColorLightLevelFuncSwitch(void *arg);
 void LightLevel_key(void *arg);
 void ColorTempLevel_key(void *arg);
 void RGBChange_key(void *arg);

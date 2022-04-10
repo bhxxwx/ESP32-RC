@@ -231,7 +231,7 @@ static esp_err_t ble_mesh_init(void)
 
 	return ESP_OK;
 }
-// static void echo_task(void *arg);
+static void echo_task(void *arg);
 static void hallSenor_task(void *arg);
 void app_main(void)
 {
@@ -282,7 +282,9 @@ void app_main(void)
 	}
 
 	ble_mesh_get_dev_uuid(dev_uuid);
+	dev_uuid[1] = 0x10;
 	dev_uuid[2] = 0xBB;
+	ESP_LOGI(TAG, "dev_uuid：%x,%x,%x", dev_uuid[0], dev_uuid[1], dev_uuid[2]);
 	/* Initialize the Bluetooth Mesh Subsystem */
 	err = ble_mesh_init();
 	if (err)
@@ -294,20 +296,31 @@ void app_main(void)
 	if (dev_uuid[0] == 0xAA)
 		ESP_LOGI(TAG, "In Normal Mode");
 	ESP_ERROR_CHECK(esp_pm_configure(&pm_config));
-	//	CommandSystemInit();
-	//	CommandReg("OP_PROV", OP_PROV_Func);
+		CommandSystemInit();
+		CommandReg("OP_PROV", OP_PROV_Func);
 	//	CommandReg("CL_PROV", CL_PROV_Func);
-	//	CommandReg("RE_FACT", RE_FACT_Func);
+		CommandReg("RE_FACT", RE_FACT_Func);
 	//	CommandReg("SE_MSGE", SE_MSGE_Func);
 	//	CommandReg("PR_OPPN", OnOff_key);
-	//	CommandReg("PR_MLLK", MainColorLightLevelTog_key);
+	//	CommandReg("PR_MLLK", MainColorLightTog_key);
 	//	CommandReg("PR_LLVK", LightLevel_key);
-	//	xTaskCreatePinnedToCore(echo_task, "uart_echo_task", ECHO_TASK_STACK_SIZE, NULL, 10, NULL, 0);
+		xTaskCreatePinnedToCore(echo_task, "uart_echo_task", ECHO_TASK_STACK_SIZE, NULL, 10, NULL, 0);
 	xTaskCreatePinnedToCore(hallSenor_task, "hallSenor_task", 4096, NULL, 10, NULL, 0);
 }
 
 void OP_PROV_Func(void *arg)
 {
+	ESP_LOGI(TAG, "arg1:%s", (char *)arg);
+	if (*(uint8_t *)arg=='$')
+	{
+		ESP_LOGI(TAG, "In decode");
+		uint8_t data[2];
+		DecodeCommandValue((char *)arg,data);
+		ESP_LOGI(TAG, "In decode:%d",data[0]);
+
+		*(char *)arg = data[0]+48;
+	}
+	ESP_LOGI(TAG, "arg2:%c", *(char *)arg);
 	if (*(uint8_t *)arg == '0')
 	{
 		LED_op(1);
@@ -320,7 +333,7 @@ void OP_PROV_Func(void *arg)
 		}
 		else
 			WriteToNVS("FactoryMode", 0, NVS_USER_HANDLE);
-	}
+		}
 	if (*(uint8_t *)arg == '1')
 	{
 		ESP_LOGI(TAG, "reset");
@@ -330,24 +343,24 @@ void OP_PROV_Func(void *arg)
 	}
 }
 
-// static void echo_task(void *arg)
-//{
-//	uint8_t *data = (uint8_t*) malloc(BUF_SIZE);
-//	while (1)
-//	{
-//		// Read data from the UART
-//		int len = uart_read_bytes(ECHO_UART_PORT_NUM, data, BUF_SIZE, 10 / portTICK_RATE_MS);
-//		if (len > 7)
-//		{
-//			data[len] = 0;
-//			ESP_LOGI("echo_task", "<<%s", data);
-//			if (DecodeCommandHead(len, (char*) data))
-//				uart_write_bytes(ECHO_UART_PORT_NUM, ">>CMD_OK\r\n", 10);
-//			bzero(data, BUF_SIZE);
-//		}
-//		vTaskDelay(100 / portTICK_PERIOD_MS);
-//	}
-// }
+static void echo_task(void *arg)
+{
+	uint8_t *data = (uint8_t*) malloc(BUF_SIZE);
+	while (1)
+	{
+		// Read data from the UART
+		int len = uart_read_bytes(ECHO_UART_PORT_NUM, data, BUF_SIZE, 10 / portTICK_RATE_MS);
+		if (len > 7)
+		{
+			data[len] = 0;
+			ESP_LOGI("echo_task", "<<%s", data);
+			if (DecodeCommandHead(len, (char*) data))
+				uart_write_bytes(ECHO_UART_PORT_NUM, ">>CMD_OK\r\n", 10);
+			bzero(data, BUF_SIZE);
+		}
+		vTaskDelay(100 / portTICK_PERIOD_MS);
+	}
+}
 
 static void hallSenor_task(void *arg)
 {
@@ -357,7 +370,8 @@ static void hallSenor_task(void *arg)
 	{
 		uint16_t value;
 		value = ADC_GetValue();
-		if (value < 100 && old_value > 1000 && _is_proved)
+		// ESP_LOGI(TAG, "OLD:%d,Cur:%d,Prov:%d", old_value, value, _is_proved);
+		if (value < 100 && old_value > 1000)
 		{
 			ESP_LOGW(TAG, "No proved Falling edge, ready to Restart");
 			OP_PROV_Func("0");

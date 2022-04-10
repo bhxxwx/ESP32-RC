@@ -22,29 +22,30 @@
 #define LinkPinToFunc(_pin,_func,_value,_triger)	{.pin = (_pin), .Func = (_func), .value = (_value),.triger=(_triger)}
 
 PinFuncMap_t ShortPressPinFuncMap[] = {
-LinkPinToFunc(GPIO_NUM_34,OnOff_key,"1",BUTTON_ACTIVE_LOW),
-LinkPinToFunc(GPIO_NUM_39,MainColorLightLevelTog_key,"1",BUTTON_ACTIVE_LOW),
-LinkPinToFunc(GPIO_NUM_35,MainColorLightLevelTog_key,"0",BUTTON_ACTIVE_LOW),
-LinkPinToFunc(GPIO_NUM_32,LightLevel_key,"0",BUTTON_ACTIVE_LOW),
-LinkPinToFunc(GPIO_NUM_25,LightLevel_key,"1",BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_34, OnOff_key, "1", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_39, MainColorLightTog_key, "1", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_35, MainColorLightTog_key, "0", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_32, LightLevel_key, "0", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_25, LightLevel_key, "1", BUTTON_ACTIVE_LOW),
 
-LinkPinToFunc(GPIO_NUM_26,ColorTempLevel_key,"0",BUTTON_ACTIVE_LOW),
-LinkPinToFunc(GPIO_NUM_4,ColorTempLevel_key,"1",BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_27, MainColorLightLevelFuncSwitch, "0", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_26, ColorTempLevel_key, "0", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_4, ColorTempLevel_key, "1", BUTTON_ACTIVE_LOW),
 
-LinkPinToFunc(GPIO_NUM_23,RGBChange_key,"0",BUTTON_ACTIVE_LOW),
-LinkPinToFunc(GPIO_NUM_16,RGBChange_key,"1",BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_18, MainColorLightLevelFuncSwitch, "1", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_23, RGBChange_key, "0", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_16, RGBChange_key, "1", BUTTON_ACTIVE_LOW),
 
-LinkPinToFunc(GPIO_NUM_5,Dance_key,"1",BUTTON_ACTIVE_LOW),
-LinkPinToFunc(GPIO_NUM_18,Dance_key,"2",BUTTON_ACTIVE_LOW),
-LinkPinToFunc(GPIO_NUM_19,Dance_key,"3",BUTTON_ACTIVE_LOW),
-LinkPinToFunc(GPIO_NUM_33,Dance_key,"4",BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_5, Dance_key, "1", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_18, Dance_key, "2", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_19, Dance_key, "3", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_33, Dance_key, "4", BUTTON_ACTIVE_LOW),
 
-LinkPinToFunc(GPIO_NUM_21,SenceMode_key,"14",BUTTON_ACTIVE_LOW),
-LinkPinToFunc(GPIO_NUM_22,SenceMode_key,"25",BUTTON_ACTIVE_LOW),
-LinkPinToFunc(GPIO_NUM_13,SenceMode_key,"36",BUTTON_ACTIVE_LOW),
-//LinkPinToFunc(GPIO_NUM_0,SenceMode_key,"36",BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_21, SenceMode_key, "14", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_22, SenceMode_key, "25", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_13, SenceMode_key, "36", BUTTON_ACTIVE_LOW),
+	// LinkPinToFunc(GPIO_NUM_0,SenceMode_key,"36",BUTTON_ACTIVE_LOW),
 };
-
 
 extern void example_ble_mesh_send_vendor_message(uint8_t *data, uint8_t len);
 void LED_blink();
@@ -61,11 +62,21 @@ void OnOff_key(void *arg)
 	ESP_LOGI(TAG, "%s(%d)", __func__, *((uint8_t* ) arg));
 }
 
-void MainColorLightLevelTog_key(void *arg)
+void MainColorLightTog_key(void *arg)
 {
-	_MC_switch = *((uint8_t*) arg) == 49 ? 1 : 0;
+	uint8_t data[2] = {0};
+	// _MC_switch = *((uint8_t*) arg) == 49 ? 1 : 0;
+	data[0] = 4;
+	data[1] = *((uint8_t *)arg) == 49 ? 2 : 3;
+	example_ble_mesh_send_vendor_message(data, 2);
 	LED_blink();
 	ESP_LOGI(TAG, "%s(%d)", __func__, *((uint8_t* ) arg));
+}
+
+void MainColorLightLevelFuncSwitch(void *arg)
+{
+	_MC_switch = *((uint8_t *)arg) == 49 ? 1 : 0;
+	ESP_LOGI(TAG, "%s(%d)", __func__, *((uint8_t *)arg));
 }
 
 void LightLevel_key(void *arg)

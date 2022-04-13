@@ -3740,10 +3740,7 @@
                                                 "help": "Maximum GATT Server Profiles Count",
                                                 "id": "BT_GATT_MAX_SR_PROFILES",
                                                 "name": "BT_GATT_MAX_SR_PROFILES",
-                                                "range": [
-                                                    1,
-                                                    32
-                                                ],
+                                                "range": null,
                                                 "title": "Max GATT Server Profiles",
                                                 "type": "int"
                                             },
@@ -3814,10 +3811,7 @@
                                                 "help": "The number of attempts to reconnect if the connection establishment failed",
                                                 "id": "BT_GATTC_CONNECT_RETRY_COUNT",
                                                 "name": "BT_GATTC_CONNECT_RETRY_COUNT",
-                                                "range": [
-                                                    0,
-                                                    7
-                                                ],
+                                                "range": null,
                                                 "title": "The number of attempts to reconnect if the connection establishment failed",
                                                 "type": "int"
                                             }
@@ -6937,10 +6931,7 @@
                                 "help": "This option determines for how long the local node advertises using\nNode Identity. The given value is in seconds. The specification limits\nthis to 60 seconds and lists it as the recommended value as well.\nSo leaving the default value is the safest option.\nWhen an unprovisioned device is provisioned successfully and becomes a\nnode, it will start to advertise using Node Identity during the time\nset by this option. And after that, Network ID will be advertised.",
                                 "id": "BLE_MESH_NODE_ID_TIMEOUT",
                                 "name": "BLE_MESH_NODE_ID_TIMEOUT",
-                                "range": [
-                                    1,
-                                    60
-                                ],
+                                "range": null,
                                 "title": "Node Identity advertising timeout",
                                 "type": "int"
                             },
@@ -6950,10 +6941,7 @@
                                 "help": "This option specifies how many Proxy Filter entries the local node supports.\nThe entries of Proxy filter (whitelist or blacklist) are used to store a\nlist of addresses which can be used to decide which messages will be forwarded\nto the Proxy Client by the Proxy Server.",
                                 "id": "BLE_MESH_PROXY_FILTER_SIZE",
                                 "name": "BLE_MESH_PROXY_FILTER_SIZE",
-                                "range": [
-                                    1,
-                                    32767
-                                ],
+                                "range": null,
                                 "title": "Maximum number of filter entries per Proxy Client",
                                 "type": "int"
                             }

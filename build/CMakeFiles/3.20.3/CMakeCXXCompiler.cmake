@@ -21,11 +21,11 @@ set(CMAKE_CXX_SIMULATE_VERSION "")
 
 
 
-set(CMAKE_AR "C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ar.exe")
-set(CMAKE_CXX_COMPILER_AR "C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ar.exe")
-set(CMAKE_RANLIB "C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ranlib.exe")
-set(CMAKE_CXX_COMPILER_RANLIB "C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ranlib.exe")
-set(CMAKE_LINKER "C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ld.exe")
+set(CMAKE_AR "C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ar.exe")
+set(CMAKE_CXX_COMPILER_AR "C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ar.exe")
+set(CMAKE_RANLIB "C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ranlib.exe")
+set(CMAKE_CXX_COMPILER_RANLIB "C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ranlib.exe")
+set(CMAKE_LINKER "C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ld.exe")
 set(CMAKE_MT "")
 set(CMAKE_COMPILER_IS_GNUCXX 1)
 set(CMAKE_CXX_COMPILER_LOADED 1)

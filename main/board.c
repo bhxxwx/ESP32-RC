@@ -28,11 +28,11 @@ PinFuncMap_t ShortPressPinFuncMap[] = {
 	LinkPinToFunc(GPIO_NUM_32, LightLevel_key, "0", BUTTON_ACTIVE_LOW),
 	LinkPinToFunc(GPIO_NUM_25, LightLevel_key, "1", BUTTON_ACTIVE_LOW),
 
-	LinkPinToFunc(GPIO_NUM_27, MainColorLightLevelFuncSwitch, "0", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_15, MainColorLightLevelFuncSwitch, "0", BUTTON_ACTIVE_HIGH),
 	LinkPinToFunc(GPIO_NUM_26, ColorTempLevel_key, "0", BUTTON_ACTIVE_LOW),
 	LinkPinToFunc(GPIO_NUM_4, ColorTempLevel_key, "1", BUTTON_ACTIVE_LOW),
 
-	LinkPinToFunc(GPIO_NUM_18, MainColorLightLevelFuncSwitch, "1", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_2, MainColorLightLevelFuncSwitch, "1", BUTTON_ACTIVE_HIGH),
 	LinkPinToFunc(GPIO_NUM_23, RGBChange_key, "0", BUTTON_ACTIVE_LOW),
 	LinkPinToFunc(GPIO_NUM_16, RGBChange_key, "1", BUTTON_ACTIVE_LOW),
 
@@ -47,7 +47,13 @@ PinFuncMap_t ShortPressPinFuncMap[] = {
 	// LinkPinToFunc(GPIO_NUM_0,SenceMode_key,"36",BUTTON_ACTIVE_LOW),
 };
 
-extern void example_ble_mesh_send_vendor_message(uint8_t *data, uint8_t len);
+PinFuncMap_t ShortPressPinFuncMap_pd[] = {
+	LinkPinToFunc(GPIO_NUM_15, MainColorLightLevelFuncSwitch, "0", BUTTON_ACTIVE_LOW),
+	LinkPinToFunc(GPIO_NUM_2, MainColorLightLevelFuncSwitch, "1", BUTTON_ACTIVE_LOW),
+};
+
+extern void
+example_ble_mesh_send_vendor_message(uint8_t *data, uint8_t len);
 void LED_blink();
 static bool _MC_switch = false;
 static uint8_t _mode;
@@ -76,6 +82,7 @@ void MainColorLightTog_key(void *arg)
 void MainColorLightLevelFuncSwitch(void *arg)
 {
 	_MC_switch = *((uint8_t *)arg) == 49 ? 1 : 0;
+	LED_blink();
 	ESP_LOGI(TAG, "%s(%d)", __func__, *((uint8_t *)arg));
 }
 
@@ -202,7 +209,7 @@ void board_init(uint8_t mode)
 	gpio_set_level(GPIO_NUM_14, _mode?1:0);
 	for (int i = 0; i < ARRAY_SIZE(ShortPressPinFuncMap); i++)
 	{
-		button_handle_t btn_handle = iot_button_create(ShortPressPinFuncMap[i].pin, BUTTON_ACTIVE_LOW);
+		button_handle_t btn_handle = iot_button_create(ShortPressPinFuncMap[i].pin, ShortPressPinFuncMap[i].triger);
 		if (btn_handle)
 		{
 			ESP_LOGI(TAG, "GPIO %d Init ok", ShortPressPinFuncMap[i].pin);
@@ -218,7 +225,25 @@ void board_init(uint8_t mode)
 		}
 	}
 
-	// button_handle_t btn_handle = iot_button_create(GPIO_NUM_36, BUTTON_ACTIVE_LOW);
-	// iot_button_set_evt_cb(btn_handle, BUTTON_CB_PUSH, hallSenor_task, "0");
-	// iot_button_set_evt_cb(btn_handle, BUTTON_CB_RELEASE, hallSenor_task, "1");
+	// for (int i = 0; i < ARRAY_SIZE(ShortPressPinFuncMap_pd); i++)
+	// {
+	// 	button_handle_t btn_handle = iot_button_create_pulldown(ShortPressPinFuncMap_pd[i].pin, BUTTON_ACTIVE_HIGH);
+	// 	if (btn_handle)
+	// 	{
+	// 		ESP_LOGI(TAG, "GPIO %d Init ok", ShortPressPinFuncMap_pd[i].pin);
+	// 		iot_button_set_evt_cb(btn_handle, BUTTON_CB_RELEASE, ShortPressPinFuncMap_pd[i].Func, ShortPressPinFuncMap_pd[i].value);
+	// 		if (ShortPressPinFuncMap_pd[i].Func == SenceMode_key)
+	// 		{
+	// 			iot_button_add_custom_cb(btn_handle, 2, ShortPressPinFuncMap_pd[i].Func, ShortPressPinFuncMap_pd[i].value + 1);
+	// 		}
+	// 	}
+	// 	else
+	// 	{
+	// 		ESP_LOGE(TAG, "GPIO %d Init failure", ShortPressPinFuncMap_pd[i].pin);
+	// 	}
+	// }
+
+		// button_handle_t btn_handle = iot_button_create(GPIO_NUM_36, BUTTON_ACTIVE_LOW);
+		// iot_button_set_evt_cb(btn_handle, BUTTON_CB_PUSH, hallSenor_task, "0");
+		// iot_button_set_evt_cb(btn_handle, BUTTON_CB_RELEASE, hallSenor_task, "1");
 }

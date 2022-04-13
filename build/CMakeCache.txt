@@ -21,18 +21,18 @@ CCACHE_ENABLE:UNINITIALIZED=1
 CCACHE_FOUND:FILEPATH=C:/Users/wxujs/.espressif/tools/ccache/4.3/ccache-4.3-windows-64/ccache.exe
 
 //Path to a program.
-CMAKE_ADDR2LINE:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-addr2line.exe
+CMAKE_ADDR2LINE:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-addr2line.exe
 
 //Path to a program.
-CMAKE_AR:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ar.exe
+CMAKE_AR:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ar.exe
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
-CMAKE_ASM_COMPILER_AR:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ar.exe
+CMAKE_ASM_COMPILER_AR:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ar.exe
 
 //A wrapper around 'ranlib' adding the appropriate '--plugin' option
 // for the GCC compiler
-CMAKE_ASM_COMPILER_RANLIB:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ranlib.exe
+CMAKE_ASM_COMPILER_RANLIB:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ranlib.exe
 
 //Flags used by the ASM compiler during all build types.
 CMAKE_ASM_FLAGS:STRING=
@@ -55,11 +55,11 @@ CMAKE_BUILD_TYPE:STRING=
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
-CMAKE_CXX_COMPILER_AR:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ar.exe
+CMAKE_CXX_COMPILER_AR:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ar.exe
 
 //A wrapper around 'ranlib' adding the appropriate '--plugin' option
 // for the GCC compiler
-CMAKE_CXX_COMPILER_RANLIB:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ranlib.exe
+CMAKE_CXX_COMPILER_RANLIB:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ranlib.exe
 
 //C++ Compiler Base Flags
 CMAKE_CXX_FLAGS:STRING=-mlongcalls -Wno-frame-address
@@ -78,11 +78,11 @@ CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
-CMAKE_C_COMPILER_AR:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ar.exe
+CMAKE_C_COMPILER_AR:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ar.exe
 
 //A wrapper around 'ranlib' adding the appropriate '--plugin' option
 // for the GCC compiler
-CMAKE_C_COMPILER_RANLIB:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ranlib.exe
+CMAKE_C_COMPILER_RANLIB:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc-ranlib.exe
 
 //C Compiler Base Flags
 CMAKE_C_FLAGS:STRING=-mlongcalls -Wno-frame-address
@@ -118,13 +118,13 @@ CMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
 //Enable/Disable output of compile commands during generation.
-CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=OFF
+CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=
 
 //Install path prefix, prepended onto install directories.
 CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/vendor_server
 
 //Path to a program.
-CMAKE_LINKER:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ld.exe
+CMAKE_LINKER:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ld.exe
 
 //Program used to build from build.ninja files.
 CMAKE_MAKE_PROGRAM:FILEPATH=C:/Users/wxujs/.espressif/tools/ninja/1.10.2/ninja.exe
@@ -150,13 +150,13 @@ CMAKE_MODULE_LINKER_FLAGS_RELEASE:STRING=
 CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
 //Path to a program.
-CMAKE_NM:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-nm.exe
+CMAKE_NM:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-nm.exe
 
 //Path to a program.
-CMAKE_OBJCOPY:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-objcopy.exe
+CMAKE_OBJCOPY:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-objcopy.exe
 
 //Path to a program.
-CMAKE_OBJDUMP:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-objdump.exe
+CMAKE_OBJDUMP:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-objdump.exe
 
 //Value Computed by CMake
 CMAKE_PROJECT_DESCRIPTION:STATIC=
@@ -168,10 +168,10 @@ CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 CMAKE_PROJECT_NAME:STATIC=vendor_server
 
 //Path to a program.
-CMAKE_RANLIB:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ranlib.exe
+CMAKE_RANLIB:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ranlib.exe
 
 //Path to a program.
-CMAKE_READELF:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-readelf.exe
+CMAKE_READELF:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-readelf.exe
 
 //Flags used by the linker during the creation of shared libraries
 // during all build types.
@@ -221,7 +221,7 @@ CMAKE_STATIC_LINKER_FLAGS_RELEASE:STRING=
 CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
 //Path to a program.
-CMAKE_STRIP:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-strip.exe
+CMAKE_STRIP:FILEPATH=C:/Users/wxujs/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-strip.exe
 
 //The CMake toolchain file
 CMAKE_TOOLCHAIN_FILE:FILEPATH=E:/EspIDF/tools/cmake/toolchain-esp32.cmake
@@ -266,7 +266,7 @@ PERL_EXECUTABLE:FILEPATH=PERL_EXECUTABLE-NOTFOUND
 PYTHON_DEPS_CHECKED:UNINITIALIZED=1
 
 //Path to a program.
-PYTHON_EXECUTABLE:FILEPATH=C:/Users/wxujs/.espressif/python_env/idf4.4_py3.7_env/Scripts/python.exe
+PYTHON_EXECUTABLE:FILEPATH=C:/Users/wxujs/.espressif/python_env/idf4.4_py3.8_env/Scripts/python.exe
 
 //Allow unsafe builds. These builds ARE NOT SECURE.
 UNSAFE_BUILD:BOOL=OFF
@@ -697,7 +697,7 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding Git
 FIND_PACKAGE_MESSAGE_DETAILS_Git:INTERNAL=[C:/Users/wxujs/.espressif/tools/idf-git/2.30.1/cmd/git.exe][v2.30.1.windows.1()]
 //Details about finding PythonInterp
-FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[C:/Users/wxujs/.espressif/python_env/idf4.4_py3.7_env/Scripts/python.exe][v3.7.7()]
+FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[C:/Users/wxujs/.espressif/python_env/idf4.4_py3.8_env/Scripts/python.exe][v3.8.7()]
 //ADVANCED property for variable: GIT_EXECUTABLE
 GIT_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PERL_EXECUTABLE

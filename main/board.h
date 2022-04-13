@@ -1,7 +1,7 @@
 /*
  * @Author: Wangxiang
  * @Date: 2022-03-02 16:08:47
- * @LastEditTime: 2022-04-08 10:42:49
+ * @LastEditTime: 2022-04-11 15:57:38
  * @LastEditors: Wangxiang
  * @Description: 
  * @FilePath: /ESP32_VndServer_RC/main/board.h
@@ -28,7 +28,7 @@ typedef struct
 	uint8_t pin;
 	void (*Func)(void *arg);
 	char *value;
-	uint8_t triger;
+	button_active_t triger;
 } PinFuncMap_t;
 
 void board_init(uint8_t mode);

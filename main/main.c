@@ -57,8 +57,8 @@ static esp_ble_mesh_cfg_srv_t config_server = {
 #endif
 	.default_ttl = 7,
 	/* 3 transmissions with 20ms interval */
-	.net_transmit = ESP_BLE_MESH_TRANSMIT(2, 20),
-	.relay_retransmit = ESP_BLE_MESH_TRANSMIT(2, 20),
+	.net_transmit = ESP_BLE_MESH_TRANSMIT(2, 500),
+	.relay_retransmit = ESP_BLE_MESH_TRANSMIT(2, 500),
 };
 
 static esp_ble_mesh_model_t root_models[] = {
@@ -218,7 +218,7 @@ static esp_err_t ble_mesh_init(void)
 		return err;
 	}
 
-	err = esp_ble_mesh_node_prov_enable(ESP_BLE_MESH_PROV_ADV | ESP_BLE_MESH_PROV_GATT);
+	err = esp_ble_mesh_node_prov_enable(ESP_BLE_MESH_PROV_ADV );
 	if (err != ESP_OK)
 	{
 		ESP_LOGE(TAG, "Failed to enable mesh node");
@@ -233,6 +233,7 @@ static esp_err_t ble_mesh_init(void)
 }
 static void echo_task(void *arg);
 static void hallSenor_task(void *arg);
+static void ST_BLUT_FUNC(void *arg);
 void app_main(void)
 {
 	esp_err_t err;
@@ -300,12 +301,33 @@ void app_main(void)
 		CommandReg("OP_PROV", OP_PROV_Func);
 	//	CommandReg("CL_PROV", CL_PROV_Func);
 		CommandReg("RE_FACT", RE_FACT_Func);
-	//	CommandReg("SE_MSGE", SE_MSGE_Func);
+		CommandReg("ST_BLUT", ST_BLUT_FUNC);
 	//	CommandReg("PR_OPPN", OnOff_key);
 	//	CommandReg("PR_MLLK", MainColorLightTog_key);
 	//	CommandReg("PR_LLVK", LightLevel_key);
 		xTaskCreatePinnedToCore(echo_task, "uart_echo_task", ECHO_TASK_STACK_SIZE, NULL, 10, NULL, 0);
 	xTaskCreatePinnedToCore(hallSenor_task, "hallSenor_task", 4096, NULL, 10, NULL, 0);
+}
+
+static void ST_BLUT_FUNC(void *arg)
+{
+	if (*(uint8_t *)arg == '$')
+	{
+		ESP_LOGI(TAG, "In decode");
+		uint8_t data[2];
+		DecodeCommandValue((char *)arg, data);
+		ESP_LOGI(TAG, "In decode:%d", data[0]);
+		*(char *)arg = data[0] + 48;
+	}
+	if (*(uint8_t *)arg == '0')
+	{
+		// esp_bluedroid_disable();
+		// esp_bt_sleep_enable();
+	}
+	else
+	{
+		// esp_bluedroid_enable();
+	}
 }
 
 void OP_PROV_Func(void *arg)
@@ -358,7 +380,7 @@ static void echo_task(void *arg)
 				uart_write_bytes(ECHO_UART_PORT_NUM, ">>CMD_OK\r\n", 10);
 			bzero(data, BUF_SIZE);
 		}
-		vTaskDelay(100 / portTICK_PERIOD_MS);
+		vTaskDelay(300 / portTICK_PERIOD_MS);
 	}
 }
 

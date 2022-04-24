@@ -465,10 +465,7 @@
                 "help": "The option \"Use custom SPI Flash WP Pin\" must be set or this value is ignored\n\nIf burning a customized set of SPI flash pins in eFuse and using QIO or QOUT mode for flash, set this\nvalue to the GPIO number of the SPI flash WP pin.",
                 "id": "BOOTLOADER_SPI_WP_PIN",
                 "name": "BOOTLOADER_SPI_WP_PIN",
-                "range": [
-                    0,
-                    33
-                ],
+                "range": null,
                 "title": "Custom SPI Flash WP Pin",
                 "type": "int"
             },
@@ -3740,7 +3737,10 @@
                                                 "help": "Maximum GATT Server Profiles Count",
                                                 "id": "BT_GATT_MAX_SR_PROFILES",
                                                 "name": "BT_GATT_MAX_SR_PROFILES",
-                                                "range": null,
+                                                "range": [
+                                                    1,
+                                                    32
+                                                ],
                                                 "title": "Max GATT Server Profiles",
                                                 "type": "int"
                                             },
@@ -3811,7 +3811,10 @@
                                                 "help": "The number of attempts to reconnect if the connection establishment failed",
                                                 "id": "BT_GATTC_CONNECT_RETRY_COUNT",
                                                 "name": "BT_GATTC_CONNECT_RETRY_COUNT",
-                                                "range": null,
+                                                "range": [
+                                                    0,
+                                                    7
+                                                ],
                                                 "title": "The number of attempts to reconnect if the connection establishment failed",
                                                 "type": "int"
                                             }
@@ -6931,7 +6934,10 @@
                                 "help": "This option determines for how long the local node advertises using\nNode Identity. The given value is in seconds. The specification limits\nthis to 60 seconds and lists it as the recommended value as well.\nSo leaving the default value is the safest option.\nWhen an unprovisioned device is provisioned successfully and becomes a\nnode, it will start to advertise using Node Identity during the time\nset by this option. And after that, Network ID will be advertised.",
                                 "id": "BLE_MESH_NODE_ID_TIMEOUT",
                                 "name": "BLE_MESH_NODE_ID_TIMEOUT",
-                                "range": null,
+                                "range": [
+                                    1,
+                                    60
+                                ],
                                 "title": "Node Identity advertising timeout",
                                 "type": "int"
                             },
@@ -6941,7 +6947,10 @@
                                 "help": "This option specifies how many Proxy Filter entries the local node supports.\nThe entries of Proxy filter (whitelist or blacklist) are used to store a\nlist of addresses which can be used to decide which messages will be forwarded\nto the Proxy Client by the Proxy Server.",
                                 "id": "BLE_MESH_PROXY_FILTER_SIZE",
                                 "name": "BLE_MESH_PROXY_FILTER_SIZE",
-                                "range": null,
+                                "range": [
+                                    1,
+                                    32767
+                                ],
                                 "title": "Maximum number of filter entries per Proxy Client",
                                 "type": "int"
                             }
@@ -6982,10 +6991,7 @@
                                 "help": "This value defines in seconds how soon any pending changes are actually\nwritten into persistent storage (flash) after a change occurs.\nThe option allows nodes to delay a certain period of time to save proper\ninformation to flash. The default value is 0, which means information\nwill be stored immediately once there are updates.",
                                 "id": "BLE_MESH_STORE_TIMEOUT",
                                 "name": "BLE_MESH_STORE_TIMEOUT",
-                                "range": [
-                                    0,
-                                    1000000
-                                ],
+                                "range": null,
                                 "title": "Delay (in seconds) before storing anything persistently",
                                 "type": "int"
                             },
@@ -6995,10 +7001,7 @@
                                 "help": "This value defines how often the local sequence number gets updated in\npersistent storage (i.e. flash). e.g. a value of 100 means that the\nsequence number will be stored to flash on every 100th increment.\nIf the node sends messages very frequently a higher value makes more\nsense, whereas if the node sends infrequently a value as low as 0\n(update storage for every increment) can make sense. When the stack\ngets initialized it will add sequence number to the last stored one,\nso that it starts off with a value that's guaranteed to be larger than\nthe last one used before power off.",
                                 "id": "BLE_MESH_SEQ_STORE_RATE",
                                 "name": "BLE_MESH_SEQ_STORE_RATE",
-                                "range": [
-                                    0,
-                                    1000000
-                                ],
+                                "range": null,
                                 "title": "How often the sequence number gets updated in storage",
                                 "type": "int"
                             },
@@ -7008,10 +7011,7 @@
                                 "help": "This value defines in seconds how soon the RPL (Replay Protection List)\ngets written to persistent storage after a change occurs. If the node\nreceives messages frequently, then a large value is recommended. If the\nnode receives messages rarely, then the value can be as low as 0 (which\nmeans the RPL is written into the storage immediately).\nNote that if the node operates in a security-sensitive case, and there is\na risk of sudden power-off, then a value of 0 is strongly recommended.\nOtherwise, a power loss before RPL being written into the storage may\nintroduce message replay attacks and system security will be in a\nvulnerable state.",
                                 "id": "BLE_MESH_RPL_STORE_TIMEOUT",
                                 "name": "BLE_MESH_RPL_STORE_TIMEOUT",
-                                "range": [
-                                    0,
-                                    1000000
-                                ],
+                                "range": null,
                                 "title": "Minimum frequency that the RPL gets updated in storage",
                                 "type": "int"
                             },
@@ -9579,8 +9579,8 @@
                                 "id": "ESP32_ULP_COPROC_RESERVE_MEM",
                                 "name": "ESP32_ULP_COPROC_RESERVE_MEM",
                                 "range": [
-                                    0,
-                                    0
+                                    32,
+                                    8176
                                 ],
                                 "title": "RTC slow memory reserved for coprocessor",
                                 "type": "int"
@@ -11565,7 +11565,7 @@
                         "name": "ESP_CONSOLE_UART_BAUDRATE",
                         "range": [
                             1200,
-                            1000000
+                            4000000
                         ],
                         "title": "UART console baud rate",
                         "type": "int"
@@ -13742,10 +13742,7 @@
                                 "help": "FreeRTOS will enter light sleep mode if no tasks need to run for this number\nof ticks.",
                                 "id": "FREERTOS_IDLE_TIME_BEFORE_SLEEP",
                                 "name": "FREERTOS_IDLE_TIME_BEFORE_SLEEP",
-                                "range": [
-                                    2,
-                                    4294967295
-                                ],
+                                "range": null,
                                 "title": "Minimum number of ticks to enter sleep mode for",
                                 "type": "int"
                             }

@@ -70,9 +70,9 @@ D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/perfmon/libperfmon.a
 D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/spiffs/libspiffs.a
 D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/ulp/libulp.a
 D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/wifi_provisioning/libwifi_provisioning.a
-D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/main/libmain.a
-D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/example_init/libexample_init.a
 D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/button/libbutton.a
 D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/ADCServer/libADCServer.a
 D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/CommandSystem/libCommandSystem.a
 D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/PWM/libPWM.a
+D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/example_init/libexample_init.a
+D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/main/libmain.a

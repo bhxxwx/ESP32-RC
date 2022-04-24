@@ -1,0 +1,50 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ram              0x00000000         0x00000400         rw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD CMakeFiles/ulp_main.dir/pulse_cnt.ulp.S.obj
+LOAD CMakeFiles/ulp_main.dir/wake_up.ulp.S.obj
+
+.text           0x00000000       0xac load address 0x0000000c
+ *(.text)
+ .text          0x00000000       0x98 CMakeFiles/ulp_main.dir/pulse_cnt.ulp.S.obj
+                0x00000000                entry
+                0x00000020                read_io_loop_active_low
+                0x00000038                read_io_high_active_low
+                0x00000044                read_done_active_low
+                0x00000074                io_low_active
+                0x00000094                continue
+ .text          0x00000098       0x14 CMakeFiles/ulp_main.dir/wake_up.ulp.S.obj
+                0x00000098                wake_up
+
+.data           0x000000ac        0x0 load address 0x000000b8
+                0x000000ac                . = ALIGN (0x4)
+ *(.data)
+ .data          0x000000ac        0x0 CMakeFiles/ulp_main.dir/pulse_cnt.ulp.S.obj
+ .data          0x000000ac        0x0 CMakeFiles/ulp_main.dir/wake_up.ulp.S.obj
+
+.bss            0x000000ac       0x5c load address 0x000000b8
+                0x000000ac                . = ALIGN (0x4)
+ *(.bss)
+ .bss           0x000000ac       0x5c CMakeFiles/ulp_main.dir/pulse_cnt.ulp.S.obj
+                0x000000ac                is_ulp_wakeup
+                0x000000b0                dect_io
+                0x000000b4                wake_up_io
+                0x000000b8                wake_up_index
+                0x000000bc                io_numbers_active_low
+                0x000000c0                io_number_active_low
+                0x00000100                io_number_active_high
+ .bss           0x00000108        0x0 CMakeFiles/ulp_main.dir/wake_up.ulp.S.obj
+
+.header         0x00000108        0xc load address 0x00000000
+                0x00000108        0x4 LONG 0x706c75
+                0x0000010c        0x2 SHORT 0xc LOADADDR (.text)
+                0x0000010e        0x2 SHORT 0xac SIZEOF (.text)
+                0x00000110        0x2 SHORT 0x0 SIZEOF (.data)
+                0x00000112        0x2 SHORT 0x5c SIZEOF (.bss)
+OUTPUT(ulp_main elf32-esp32ulp)

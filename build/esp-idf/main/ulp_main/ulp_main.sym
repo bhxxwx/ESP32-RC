@@ -1,0 +1,14 @@
+continue T 00000094 
+dect_io B 000000b0 
+entry T 00000000 
+io_low_active T 00000074 
+io_number_active_high B 00000100 
+io_number_active_low B 000000c0 
+io_numbers_active_low B 000000bc 
+is_ulp_wakeup B 000000ac 
+read_done_active_low T 00000044 
+read_io_high_active_low T 00000038 
+read_io_loop_active_low T 00000020 
+wake_up T 00000098 
+wake_up_index B 000000b8 
+wake_up_io B 000000b4 

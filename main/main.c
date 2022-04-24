@@ -28,6 +28,15 @@
 #include "CommandSystem.h"
 #include "Servers.h"
 #include "ADCServer.h"
+
+#include "driver/rtc_io.h"
+#include "esp32/ulp.h"
+#include "ulp_main.h"
+#include "esp_sleep.h"
+
+#include "esp_timer.h"
+#include "freertos/timers.h"
+
 #define TAG "EXAMPLE"
 
 #define CID_ESP 0x02E5
@@ -41,6 +50,9 @@ void OP_PROV_Func(void *arg);
 nvs_handle_t NVS_USER_HANDLE;
 static bool _is_proved = false;
 static uint8_t dev_uuid[ESP_BLE_MESH_OCTET16_LEN] = {0xAA, 0x10, 0xBB};
+static TimerHandle_t timerToSleep_handler;
+extern const uint8_t ulp_main_bin_start[] asm("_binary_ulp_main_bin_start");
+extern const uint8_t ulp_main_bin_end[] asm("_binary_ulp_main_bin_end");
 
 static esp_ble_mesh_cfg_srv_t config_server = {
 	.relay = ESP_BLE_MESH_RELAY_DISABLED,
@@ -150,6 +162,7 @@ static void example_ble_mesh_provisioning_cb(esp_ble_mesh_prov_cb_event_t event,
 	default:
 		break;
 	}
+	xTimerReset(timerToSleep_handler, 100);
 }
 
 static void example_ble_mesh_config_server_cb(esp_ble_mesh_cfg_server_cb_event_t event, esp_ble_mesh_cfg_server_cb_param_t *param)
@@ -191,6 +204,7 @@ static void example_ble_mesh_custom_model_cb(esp_ble_mesh_model_cb_event_t event
 		}
 		break;
 	case ESP_BLE_MESH_MODEL_SEND_COMP_EVT:
+		xTimerReset(timerToSleep_handler, 100);
 		if (param->model_send_comp.err_code)
 		{
 			ESP_LOGE(TAG, "Failed to send message 0x%06x", param->model_send_comp.opcode);
@@ -218,7 +232,7 @@ static esp_err_t ble_mesh_init(void)
 		return err;
 	}
 
-	err = esp_ble_mesh_node_prov_enable(ESP_BLE_MESH_PROV_ADV );
+	err = esp_ble_mesh_node_prov_enable(ESP_BLE_MESH_PROV_ADV | ESP_BLE_MESH_PROV_GATT);
 	if (err != ESP_OK)
 	{
 		ESP_LOGE(TAG, "Failed to enable mesh node");
@@ -234,6 +248,8 @@ static esp_err_t ble_mesh_init(void)
 static void echo_task(void *arg);
 static void hallSenor_task(void *arg);
 static void ST_BLUT_FUNC(void *arg);
+
+static void timeCB(void *arg);
 void app_main(void)
 {
 	esp_err_t err;
@@ -243,6 +259,7 @@ void app_main(void)
 	pm_config.min_freq_mhz = 10;
 	pm_config.light_sleep_enable = true;
 	ESP_LOGI(TAG, "Initializing...");
+	
 
 	err = nvs_flash_init_partition("nvs_user");
 	if (err == ESP_ERR_NVS_NO_FREE_PAGES)
@@ -282,6 +299,7 @@ void app_main(void)
 		return;
 	}
 
+	timerToSleep_handler = xTimerCreate("sleep", pdMS_TO_TICKS(30000), true, "1", timeCB);
 	ble_mesh_get_dev_uuid(dev_uuid);
 	dev_uuid[1] = 0x10;
 	dev_uuid[2] = 0xBB;
@@ -296,17 +314,20 @@ void app_main(void)
 		ESP_LOGI(TAG, "In Factory Mode");
 	if (dev_uuid[0] == 0xAA)
 		ESP_LOGI(TAG, "In Normal Mode");
-	ESP_ERROR_CHECK(esp_pm_configure(&pm_config));
-		CommandSystemInit();
-		CommandReg("OP_PROV", OP_PROV_Func);
+	// ESP_ERROR_CHECK(esp_pm_configure(&pm_config));
+		// CommandSystemInit();
+		// CommandReg("OP_PROV", OP_PROV_Func);
 	//	CommandReg("CL_PROV", CL_PROV_Func);
-		CommandReg("RE_FACT", RE_FACT_Func);
-		CommandReg("ST_BLUT", ST_BLUT_FUNC);
+		// CommandReg("RE_FACT", RE_FACT_Func);
+		// CommandReg("ST_BLUT", ST_BLUT_FUNC);
 	//	CommandReg("PR_OPPN", OnOff_key);
 	//	CommandReg("PR_MLLK", MainColorLightTog_key);
 	//	CommandReg("PR_LLVK", LightLevel_key);
-		xTaskCreatePinnedToCore(echo_task, "uart_echo_task", ECHO_TASK_STACK_SIZE, NULL, 10, NULL, 0);
+		// xTaskCreatePinnedToCore(echo_task, "uart_echo_task", ECHO_TASK_STACK_SIZE, NULL, 10, NULL, 0);
 	xTaskCreatePinnedToCore(hallSenor_task, "hallSenor_task", 4096, NULL, 10, NULL, 0);
+	
+	xTimerStart(timerToSleep_handler, 10);
+	power_manage_init();
 }
 
 static void ST_BLUT_FUNC(void *arg)
@@ -416,4 +437,14 @@ static void hallSenor_task(void *arg)
 		old_value = value;
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
 	}
+}
+
+static void timeCB(void *arg)
+{
+
+	ESP_LOGW("Timer", "Go light Sleep");
+	xTimerReset(timerToSleep_handler, 100);
+	vTaskDelay(1000 / portTICK_RATE_MS);
+	enter_light_sleep();
+	// enter_deep_sleep();
 }

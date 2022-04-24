@@ -1,7 +1,7 @@
 /*
  * @Author: Wangxiang
  * @Date: 2022-03-02 16:08:47
- * @LastEditTime: 2022-04-11 15:57:38
+ * @LastEditTime: 2022-04-21 14:58:01
  * @LastEditors: Wangxiang
  * @Description: 
  * @FilePath: /ESP32_VndServer_RC/main/board.h
@@ -43,4 +43,10 @@ void SenceMode_key(void *arg);
 void Dance_key(void *arg);
 void LED_op(bool states);
 void change_mode(uint8_t mode);
+
+void power_manage_init();
+void rtc_io_init();
+void rtc_io_deinit();
+void enter_light_sleep();
+void enter_deep_sleep();
 #endif

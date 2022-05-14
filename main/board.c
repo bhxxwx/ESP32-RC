@@ -203,7 +203,7 @@ void board_init(uint8_t mode)
 	ADC_Init();
 	io_conf.intr_type = GPIO_INTR_DISABLE;
 	io_conf.mode = GPIO_MODE_OUTPUT;
-	io_conf.pin_bit_mask = 1ULL << GPIO_NUM_14;
+	io_conf.pin_bit_mask = (1ULL << GPIO_NUM_14)|(1UL<<GPIO_NUM_0);
 	// disable pull-down mode
 	io_conf.pull_down_en = 0;
 	// disable pull-up mode
@@ -301,6 +301,7 @@ void rtc_io_init()
 	rtc_gpio_isolate(GPIO_NUM_12);
 	rtc_gpio_isolate(GPIO_NUM_15);
 	rtc_gpio_isolate(GPIO_NUM_2);
+	// rtc_gpio_isolate(GPIO_NUM_0);
 	esp_deep_sleep_disable_rom_logging(); // suppress boot messages
 
 	// for (int j = 0; j < count;j++)
@@ -330,6 +331,8 @@ void enter_light_sleep()
 	ESP_LOGI("PowerManage", "Enter light sleep");
 	ESP_ERROR_CHECK(esp_sleep_enable_timer_wakeup(60000000));
 	ulp_dect_io = 1;
+	gpio_set_level(GPIO_NUM_0, 0);
+	rtc_gpio_hold_en(GPIO_NUM_0);
 	esp_light_sleep_start();
 	printf("active pin:%d", ulp_wake_up_io & UINT16_MAX);
 	esp_sleep_disable_wakeup_source(ESP_SLEEP_WAKEUP_TIMER);
@@ -342,12 +345,13 @@ void enter_light_sleep()
 		vTaskDelay(100 / portTICK_RATE_MS);
 		enter_deep_sleep();
 	}
-	
-
+	gpio_set_level(GPIO_NUM_0, 1);
 }
 void enter_deep_sleep()
 {
 	rtc_io_init();
+	gpio_set_level(GPIO_NUM_0, 0);
+	rtc_gpio_hold_en(GPIO_NUM_0);
 	ulp_dect_io = 1;
 	esp_deep_sleep_start();
 }

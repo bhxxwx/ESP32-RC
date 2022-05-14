@@ -252,6 +252,7 @@ static void ST_BLUT_FUNC(void *arg);
 static void timeCB(void *arg);
 void app_main(void)
 {
+	gpio_set_level(GPIO_NUM_0, 1);
 	esp_err_t err;
 	uint8_t FactoryMode = 0xFF;
 	esp_pm_config_esp32_t pm_config;

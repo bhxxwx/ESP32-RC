@@ -69,7 +69,7 @@ read_done_active_low:
  ADD r2,r2,1
  move r0,r2
  ADD r1,r1,1
- jumpr read_io_loop_active_low,7,LT
+ jumpr read_io_loop_active_low,5,LT
  move r0,0
  move r2,0
  move r3,0

@@ -1,5 +1,0 @@
-D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/main/ulp_main/CMakeFiles/ulp_main_ld_script.dir
-D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/main/ulp_main/CMakeFiles/ulp_main.dir
-D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/main/ulp_main/CMakeFiles/build.dir
-D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/main/ulp_main/CMakeFiles/edit_cache.dir
-D:/EclipseProject/ESP32_VndServer_RC/build/esp-idf/main/ulp_main/CMakeFiles/rebuild_cache.dir
